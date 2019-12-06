@@ -6,11 +6,13 @@ from datetime import datetime
 class UiBScheduleTester:
     groups={}
     emne1=""
-    emne1=""
+    emne2=""
+    emne3=""
 
-    def __init__(self,emne1,emne2):
+    def __init__(self,emne1,emne2,emne3):
         self.emne1=emne1
         self.emne2=emne2
+        self.emne3=emne3
     
     def get_from_uib_calender(self,url):
         url=url.split("https://mitt.uib.no")[1]
@@ -29,7 +31,9 @@ class UiBScheduleTester:
     def get_emner(self):
         try:
             conn = client.HTTPSConnection("tp.uio.no")
-            conn.request("GET", f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&type=course")
+            url=f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&type=course"
+            if self.emne3 !=None: url=f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&id%5B2%5D={self.emne3}%2C&type=course" 
+            conn.request("GET", url)
         except Exception as ex:
             print(ex)
         text = str(conn.getresponse().read().decode('utf8'))
@@ -74,13 +78,19 @@ def main():
     print("# UiB - Test om emner overlapper på tid #")
     emne1=input("Velg emne-kode 1: ")
     emne2=input("Velg emne-kode 2: ")
-    use_uib=input("Ønsker du å bruke kalenderen til UiB også ? (Y=Ja,N=Nei)")
+    emne3=None
+    use_uib=input("Ønsker du å bruke kalenderen til UiB også ? (Y=Ja,N=Nei): ")
     kalender_url=""
     if use_uib.upper()=="Y":
         kalender_url=input("Kalenderstrømen url fra MittUiB.no: ")
+    else:
+        use_emne3=input("Ønsker du å teste for et emet til (Y=Ja,N=Nei): ")
+        if use_emne3.upper()=="Y":
+            emne3=input("Velg emne-kode 3: ")
 
 
-    b=UiBScheduleTester(emne1,emne2)
+
+    b=UiBScheduleTester(emne1,emne2,emne3)
     b.get_emner()
     overlaps=list = b.is_groups_overplaping()
     if use_uib.upper()=="Y":
