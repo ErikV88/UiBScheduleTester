@@ -53,17 +53,19 @@ class UiBScheduleTester:
             for group2 in self.groups:
                 if group == group2: continue 
                 is_overlap=self.is_group_overplaping(self.groups[group],self.groups[group2])
-                if is_overlap>0:group_overlaps.append({"Group1":group,"Group2":group2})
+                if is_overlap["overlap"]>0:group_overlaps.append({"Group1":group,"Group2":group2,"Time":is_overlap["time"]})
         return group_overlaps
 
 
 
     def is_group_overplaping(self,group1,group2):
+        return_time=None
         is_overlap=0
         for time in group1:
             for time2 in group2:
                 is_overlap=self.is_overlap_single_date(time.DTSTART,time.DTEND,time2.DTSTART,time2.DTEND)
-        return is_overlap
+                return_time=time.DTSTART
+        return {"overlap":is_overlap,"time":return_time}
 
     def is_overlap_single_date(self,date_start1,date_end1,date_start2,date_end2):
         Range = namedtuple('Range', ['start', 'end'])
@@ -102,9 +104,10 @@ def main():
     else:
         for emne in overlaps:
             grupe1=emne['Group1'].replace("\\n","").replace("\\r","").replace("\r","")
-            grupe2=emne['Group2']
+            grupe2=emne['Group2'].replace("\\n","").replace("\\r","").replace("\r","")
+            overlap=emne['Time'].strftime("%H:%M - %A")
 
-            print(f"    !WARNING! - {grupe1} overlapper tiden til {grupe2}")
+            print(f"    !WARNING! - {grupe1} overlapper tiden til {grupe2} - e.g: {overlap}")
     main()
 main()
 
