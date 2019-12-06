@@ -2,6 +2,7 @@ from http import client
 from IcsParser import IcsParser
 from collections import namedtuple
 from datetime import datetime
+from global_config import StringTable as word
 
 class UiBScheduleTester:
     groups={}
@@ -75,18 +76,18 @@ class UiBScheduleTester:
         return overlap
 
 def main():
-    print("# UiB - Test om emner overlapper på tid #")
-    emne1=input("Velg emne-kode 1: ")
-    emne2=input("Velg emne-kode 2: ")
+    print("# %s #"%(word.get('title')))
+    emne1=input("%s: "%(word.get('subject1input')))
+    emne2=input("%s: "%(word.get('subject2input')))
     emne3=None
-    use_uib=input("Ønsker du å bruke kalenderen til UiB også ? (Y=Ja,N=Nei): ")
+    use_uib=input("%s: "%(word.get('use_calender')))
     kalender_url=""
     if use_uib.upper()=="Y":
-        kalender_url=input("Kalenderstrømen url fra MittUiB.no: ")
+        kalender_url=input("%s: "%(word.get('mittUiBics')))
     else:
-        use_emne3=input("Ønsker du å teste for et emet til (Y=Ja,N=Nei): ")
+        use_emne3=input("%s: "%(word.get('extrasubject')))
         if use_emne3.upper()=="Y":
-            emne3=input("Velg emne-kode 3: ")
+            emne3=input("%s: "%(word.get('subject3input')))
 
 
 
@@ -97,7 +98,7 @@ def main():
         b.get_from_uib_calender(kalender_url)
 
     if len(overlaps)<=0: 
-        print("Ingen emener overlapper")
+        print(word.get('noOverLap'))
     else:
         for emne in overlaps:
             grupe1=emne['Group1'].replace("\\n","").replace("\\r","").replace("\r","")
