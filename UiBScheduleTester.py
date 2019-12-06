@@ -1,4 +1,4 @@
-import http
+from http import client 
 from IcsParser import IcsParser
 from collections import namedtuple
 from datetime import datetime
@@ -13,8 +13,11 @@ class UiBScheduleTester:
         self.emne2=emne2
 
     def get_emner(self):
-        conn = http.client.HTTPSConnection("tp.uio.no")
-        conn.request("GET", f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&type=course")
+        try:
+            conn = client.HTTPSConnection("tp.uio.no")
+            conn.request("GET", f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&type=course")
+        except Exception as ex:
+            print(ex)
         text = str(conn.getresponse().read().decode('utf8'))
         event_data=IcsParser(text).get_events()
 
@@ -58,7 +61,7 @@ def main():
     emne1=input("Velg emne-kode 1: ")
     emne2=input("Velg emne-kode 2: ")
 
-    b=UiBSchedule(emne1,emne2)
+    b=UiBScheduleTester(emne1,emne2)
     b.get_emner()
     overlaps=list = b.is_groups_overplaping()
 
