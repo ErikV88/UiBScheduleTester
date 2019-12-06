@@ -11,6 +11,20 @@ class UiBScheduleTester:
     def __init__(self,emne1,emne2):
         self.emne1=emne1
         self.emne2=emne2
+    
+    def get_from_uib_calender(self,url):
+        url=url.split("https://mitt.uib.no")[1]
+        try:
+            conn = client.HTTPSConnection("mitt.uib.no")
+            conn.request("GET", url)
+        except Exception as ex:
+            print(ex)
+        text = str(conn.getresponse().read().decode('utf8'))
+        event_data=IcsParser(text).get_events()
+
+        for e in event_data:
+            if not e.SUMMARY in self.groups: self.groups[e.SUMMARY]=[]
+            self.groups[e.SUMMARY].append(e)
 
     def get_emner(self):
         try:
@@ -60,10 +74,17 @@ def main():
     print("# UiB - Test om emner overlapper på tid #")
     emne1=input("Velg emne-kode 1: ")
     emne2=input("Velg emne-kode 2: ")
+    use_uib=input("Ønsker du å bruke kalenderen til UiB også ? (Y=Ja,N=Nei)")
+    kalender_url=""
+    if use_uib.upper()=="Y":
+        kalender_url=input("Kalenderstrømen url fra MittUiB.no: ")
+
 
     b=UiBScheduleTester(emne1,emne2)
     b.get_emner()
     overlaps=list = b.is_groups_overplaping()
+    if use_uib.upper()=="Y":
+        b.get_from_uib_calender(kalender_url)
 
     if len(overlaps)<=0: 
         print("Ingen emener overlapper")
