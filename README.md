@@ -13,7 +13,7 @@ Data is retrieved from tp.uio.no and mitt.uib.no (by entering uniq calendars url
 - Parses data from .ics calendar
 - Create dataset of data.
 - Checks the overlap of dates in different groups.
-- Gives user an overview of something overlap.
+- Gives user an overview if something overlap by date.
 
 ![UiBScheduleTester](Screenshots/screen.png)
 
