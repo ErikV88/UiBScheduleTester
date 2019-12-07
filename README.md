@@ -15,8 +15,10 @@ Data is retrieved from tp.uio.no and mitt.uib.no (by entering uniq calendars url
 - Checks the overlap of dates in different groups.
 - Gives user an overview if something overlap by date.
 
-***In the background***
+## In the background
 ![UiBScheduleTester](Screenshots/diagram.jpg)
 
+
+## Screenshot
 ![UiBScheduleTester](Screenshots/screen.png)
 
