@@ -8,10 +8,10 @@ Data is retrieved from tp.uio.no and mitt.uib.no (by entering uniq calendars url
 
 ***The program does the following:***
 - Retrieves data from source with filter set from user (topics).
--Parses data from .ics calendar
--Create dataset of data.
+- Parses data from .ics calendar
+- Create dataset of data.
 - Checks the overlap of dates in different groups.
--Gives user an overview of something overlap.
+- Gives user an overview of something overlap.
 
 ![UiBScheduleTester](Screenshots/screen.png)
 
