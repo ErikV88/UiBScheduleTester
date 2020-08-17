@@ -110,4 +110,4 @@ def main():
             print(f"    !WARNING! - {grupe1} overlapper tiden til {grupe2} - e.g: {overlap}")
     main()
 main()
-
+ 
