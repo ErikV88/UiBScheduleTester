@@ -32,8 +32,8 @@ class UiBScheduleTester:
     def get_emner(self):
         try:
             conn = client.HTTPSConnection("tp.uio.no")
-            url=f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&type=course"
-            if self.emne3 !=None: url=f"/uib/timeplan/ical.php?sem=20v&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&id%5B2%5D={self.emne3}%2C&type=course" 
+            url=f"/uib/timeplan/ical.php?sem=20h&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&type=course"
+            if self.emne3 !=None: url=f"/uib/timeplan/ical.php?sem=20h&id%5B0%5D={self.emne1}%2C&id%5B1%5D={self.emne2}%2C&id%5B2%5D={self.emne3}%2C&type=course" 
             conn.request("GET", url)
         except Exception as ex:
             print(ex)
